@@ -315,3 +315,20 @@ class DivingFish:
             return data
         self._raise_api_error(status, data, oauth=user_id is not None)
         raise ResponseError(f"水鱼接口返回 HTTP {status}")
+
+    def music_data(self) -> list:
+        """获取水鱼公开曲目数据，用于计算最大 DX 分与谱面定数。"""
+        status, raw = self._transport(
+            "GET", self.api_url + "/music_data", {"Accept": "application/json"}, None, self.timeout
+        )
+        if status != 200:
+            raise ResponseError(f"水鱼曲目数据返回 HTTP {status}")
+        if len(raw) > MAX_RESPONSE_BYTES:
+            raise ResponseError("水鱼曲目数据过大")
+        try:
+            data = json.loads(raw.decode("utf-8"))
+        except (ValueError, UnicodeError) as error:
+            raise ResponseError("水鱼曲目数据不是合法 JSON") from error
+        if not isinstance(data, list):
+            raise ResponseError("水鱼曲目数据结构异常")
+        return data

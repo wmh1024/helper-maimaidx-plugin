@@ -15,6 +15,7 @@ from __future__ import annotations
 import os
 import tempfile
 import time
+from pathlib import Path
 
 from .divingfish import (
     DEFAULT_API_URL,
@@ -32,7 +33,8 @@ from .divingfish import (
     binding_label,
     extract_confirmation_code,
 )
-from .render import RenderUnavailable, StaticAssets, playwright_available, render_best50_png
+from .music_db import SongDatabase
+from .render_pil import RenderUnavailable, StaticAssets, render_best50_png
 
 BIND_COMMANDS = frozenset({"dfbind", "绑定水鱼", "绑定df"})
 CODE_COMMANDS = frozenset({"水鱼授权码", "dfcode"})
@@ -79,8 +81,8 @@ CODE_TEMP_FAILED_MSG = (
 BIND_SUCCESS_MSG = "水鱼查分器授权完成，现在可以使用「b50」查询 Best50 了。"
 NOT_BOUND_MSG = "尚未绑定水鱼查分器，请先发送「绑定水鱼」完成授权。"
 DRAW_UNAVAILABLE_MSG = (
-    "Best50 绘图服务未就绪：本机缺少 Playwright/Chromium。\n"
-    "请联系管理员安装依赖并执行「playwright install chromium」后重试。"
+    "Best50 绘图服务未就绪：BOT 未配置静态资源包（static_path）。\n"
+    "请联系管理员下载 maimaiDX 资源包并把其中的 static 目录填入 static_path 后重试。"
 )
 DRAW_FAILED_MSG = "Best50 绘图失败，请稍后再试。"
 
@@ -112,13 +114,17 @@ class Plugin:
             api_url=self._text(options.get("api_url"), DEFAULT_API_URL),
             timeout=timeout,
         )
+        self.song_db = SongDatabase(
+            self.client.music_data,
+            cache_path=Path(__file__).resolve().parent / ".runtime" / "music_data.json",
+        )
         self.pending: dict[str, float] = {}
         if not self.client.oauth_configured:
             ctx.logger.warning("未配置水鱼 OAuth 应用凭据，绑定与本人查询不可用")
-        if not playwright_available():
-            ctx.logger.warning("未安装 Playwright，Best50 无法绘图；安装后执行 playwright install chromium")
         if not self.assets.available:
-            ctx.logger.info("未配置 static_path，Best50 使用内置样式；下载资源包后设置 static_path 可启用曲绘与字体")
+            ctx.logger.warning(
+                "未配置 static_path，Best50 无法出图；请把静态资源包的 static 目录填入 static_path"
+            )
 
     @staticmethod
     def _text(value, default):
@@ -292,6 +298,7 @@ class Plugin:
             png = render_best50_png(
                 data, assets=self.assets, theme=self.theme,
                 bot_name=self.bot_name, timeout=self.image_timeout,
+                song_db=self.song_db,
             )
         except RenderUnavailable as error:
             ctx.logger.warning("Best50 绘图不可用：%s", error)

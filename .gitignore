@@ -1,0 +1,15 @@
+# 本地静态资源包（原项目 static：字体、背景、曲绘），体积大且版权归原作者
+static/
+assets/
+
+# 本地渲染与调试产物
+.runtime/
+*.png
+*.jpg
+*.jpeg
+*.html
+*.tmp
+
+# Python 缓存
+__pycache__/
+*.py[cod]

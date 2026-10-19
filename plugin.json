@@ -1,0 +1,5 @@
+{
+  "api": "v1",
+  "description": "舞萌DX：水鱼查分器 OAuth 绑定与 Best50 图片查询（支持查他人）",
+  "requires": ["text.receive", "text.send", "image.send"]
+}

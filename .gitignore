@@ -10,6 +10,10 @@ assets/
 *.html
 *.tmp
 
+# helper 框架的本地配置（可能包含 API Key / OAuth 凭据），不要提交
+*_config.json
+!*_config.example.json
+
 # Python 缓存
 __pycache__/
 *.py[cod]

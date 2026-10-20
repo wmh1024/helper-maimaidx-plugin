@@ -144,3 +144,9 @@ static/
 - 曲目数据缓存在 `plugins/maimaidx/.runtime/music_data.json`，默认 7 天有效，过期后下次出图自动刷新。
 - `.gitignore` 会忽略本地的 `static/`、`assets/` 资源包与渲染调试产物，避免把大文件或版权素材提交进仓库。
 - 本仓库独立维护；放入 helper 的 `plugins/maimaidx/` 目录使用。
+
+## 来源与许可
+
+- 本仓库独立维护，基于 [helper](https://github.com/Prometheus-first/helper) 微信机器人框架，采用 [MIT 许可证](LICENSE)。
+- Best50 绘制流程（`render_pil.py`）移植自 [maimaiDX](https://github.com/Yuri-YuzuChaN/maimaiDX)（MIT License，Copyright (c) 2021 Yuri-YuzuChaN），感谢原作者。
+- 曲绘、字体、背景、评级图等游戏素材版权归原作者与版权方所有，本仓库不包含这些素材；请遵守原项目的美术声明，勿删除图中署名。

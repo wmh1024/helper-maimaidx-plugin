@@ -5,6 +5,8 @@
 
 与原版一样，出图依赖 ``static_path`` 指向的静态资源包（背景、字体、评级图、
 曲绘等）；未配置资源包时无法出图。本模块只依赖 Pillow。
+
+绘制流程移植自 maimaiDX（MIT License，Copyright (c) 2021 Yuri-YuzuChaN）。
 """
 from __future__ import annotations
 

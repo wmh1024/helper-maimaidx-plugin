@@ -1,4 +1,4 @@
-# 舞萌DX（maimaidx）
+# 基于 helper 微信机器人框架的舞萌 DX 插件
 
 [helper](https://github.com/Prometheus-first/helper) 微信机器人框架的舞萌DX插件：水鱼查分器 OAuth 绑定与 Best50 图片查询。成绩数据由 [水鱼查分器](https://www.diving-fish.com/maimaidx/prober/) 提供。
 

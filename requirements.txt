@@ -1,0 +1,2 @@
+# Best50 出图使用 Pillow 拼图（render_pil.py）。
+Pillow>=10.0.0

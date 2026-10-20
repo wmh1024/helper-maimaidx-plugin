@@ -4,7 +4,7 @@
 素材、坐标与字体，输出 1400×1600 的 PNG，画面与原版一致。
 
 与原版一样，出图依赖 ``static_path`` 指向的静态资源包（背景、字体、评级图、
-曲绘等）；未配置资源包时无法出图。本模块只使用 Pillow，不需要 Playwright。
+曲绘等）；未配置资源包时无法出图。本模块只依赖 Pillow。
 """
 from __future__ import annotations
 
